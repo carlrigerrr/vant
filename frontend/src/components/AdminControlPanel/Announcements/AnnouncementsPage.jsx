@@ -92,9 +92,9 @@ const AnnouncementsPage = () => {
 
     return (
         <div className="max-w-4xl mx-auto px-4 py-8">
-            <div className="flex justify-between items-center mb-6">
-                <h1 className="text-3xl font-bold flex items-center gap-3">
-                    <SpeakerphoneIcon className="w-8 h-8 text-blue-600" /> Announcements
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
+                    <SpeakerphoneIcon className="w-7 h-7 sm:w-8 sm:h-8 text-blue-600" /> Announcements
                 </h1>
                 <button
                     onClick={() => {
@@ -102,7 +102,7 @@ const AnnouncementsPage = () => {
                         setFormData({ title: '', content: '', priority: 'normal', pinned: false, expiresAt: '' });
                         setShowModal(true);
                     }}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
+                    className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2"
                 >
                     <PlusIcon className="w-5 h-5" /> New Announcement
                 </button>

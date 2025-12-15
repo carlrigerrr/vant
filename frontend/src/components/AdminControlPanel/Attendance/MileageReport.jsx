@@ -183,14 +183,14 @@ const MileageReport = () => {
 
             {/* Filters */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
-                <div className="flex flex-wrap items-end gap-4">
+                <div className="flex flex-col gap-4">
                     <div className="flex items-center gap-2">
                         <FilterIcon className="w-5 h-5 text-gray-400" />
                         <span className="text-sm font-medium text-gray-700">Filters:</span>
                     </div>
 
                     {/* Date Range Presets */}
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
                         <button
                             onClick={() => setPresetRange('thisMonth')}
                             className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
@@ -211,40 +211,42 @@ const MileageReport = () => {
                         </button>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
                         <input
                             type="date"
                             value={filters.startDate}
                             onChange={(e) => handleFilterChange('startDate', e.target.value)}
-                            className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm"
+                            className="w-full sm:w-auto px-3 py-1.5 border border-gray-300 rounded-lg text-sm"
                         />
-                        <span className="text-gray-400">to</span>
+                        <span className="text-gray-400 hidden sm:inline">to</span>
                         <input
                             type="date"
                             value={filters.endDate}
                             onChange={(e) => handleFilterChange('endDate', e.target.value)}
-                            className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm"
+                            className="w-full sm:w-auto px-3 py-1.5 border border-gray-300 rounded-lg text-sm"
                         />
                     </div>
 
-                    <select
-                        value={filters.employeeId}
-                        onChange={(e) => handleFilterChange('employeeId', e.target.value)}
-                        className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm"
-                    >
-                        <option value="">All Employees</option>
-                        {employees.map(emp => (
-                            <option key={emp._id} value={emp._id}>{emp.username}</option>
-                        ))}
-                    </select>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                        <select
+                            value={filters.employeeId}
+                            onChange={(e) => handleFilterChange('employeeId', e.target.value)}
+                            className="w-full sm:w-auto px-3 py-1.5 border border-gray-300 rounded-lg text-sm"
+                        >
+                            <option value="">All Employees</option>
+                            {employees.map(emp => (
+                                <option key={emp._id} value={emp._id}>{emp.username}</option>
+                            ))}
+                        </select>
 
-                    <button
-                        onClick={handleApplyFilters}
-                        className="flex items-center gap-2 px-4 py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
-                    >
-                        <RefreshIcon className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                        Apply
-                    </button>
+                        <button
+                            onClick={handleApplyFilters}
+                            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                        >
+                            <RefreshIcon className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                            Apply
+                        </button>
+                    </div>
                 </div>
             </div>
 

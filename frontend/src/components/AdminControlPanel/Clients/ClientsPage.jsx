@@ -147,23 +147,21 @@ const ClientsPage = () => {
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-[var(--text-heading)]">Clients</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-heading)]">Clients</h1>
                     <p className="mt-1 text-sm text-[var(--text-body)]">Create and manage your client list</p>
                 </div>
-                <Button
+                <button
                     onClick={() => {
                         setEditingClient(null);
                         setFormData({ name: '', email: '', phone: '', address: '', password: '' });
                         setShowModal(true);
                     }}
-                    variant="primary"
-                    size="md"
-                    className="rounded-[10px]"
+                    className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2.5 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2 font-medium"
                 >
-                    <span className="mr-2">+</span> Add Client
-                </Button>
+                    <span className="text-lg">+</span> Add Client
+                </button>
             </div>
 
             <Card className="overflow-hidden">
