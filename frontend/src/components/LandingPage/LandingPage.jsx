@@ -45,7 +45,6 @@ const LandingPage = () => {
                         <div className="hidden md:flex space-x-8 items-center">
                             <button onClick={() => scrollToSection('problem')} className="text-gray-600 hover:text-[#1362FC] font-medium transition">Why Vant?</button>
                             <button onClick={() => scrollToSection('solution')} className="text-gray-600 hover:text-[#1362FC] font-medium transition">Features</button>
-                            <button onClick={() => scrollToSection('pricing')} className="text-gray-600 hover:text-[#1362FC] font-medium transition">Pricing</button>
                             <button
                                 onClick={() => navigate('/login')}
                                 className="text-[#1362FC] font-semibold hover:bg-blue-50 px-4 py-2 rounded-lg transition"
@@ -101,11 +100,11 @@ const LandingPage = () => {
                         New: Vant v1.0 is here
                     </div>
 
-                    <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-[#3d4465] mb-8 leading-[1.1]">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight text-[#3d4465] mb-6 sm:mb-8 leading-[1.15] px-2 sm:px-0">
                         Run your cleaning business without <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1362FC] to-cyan-400">daily admin chaos</span>
                     </h1>
 
-                    <p className="text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-base sm:text-lg md:text-xl text-gray-500 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
                         Scheduling, client info, proof-of-work photos, and invoicing —
                         built for small cleaning teams (5–20 staff) who are tired of WhatsApp & spreadsheets.
                     </p>
