@@ -12,7 +12,7 @@ const LoginPage = () => {
 
   if (user && user.isAuthenticated === true) {
     refresh();
-    navigate('/');
+    navigate(user.admin ? '/admin' : '/dashboard');
   }
 
   const [username, setUsername] = useState('');
@@ -27,8 +27,9 @@ const LoginPage = () => {
     try {
       const response = await axios.post('/login', { username, password });
       if (response.data === 'loginSuccessful') {
-        refresh();
-        navigate('/');
+        await refresh();
+        // Redirect based on user role - will be determined after refresh
+        window.location.href = '/dashboard';
       }
     } catch (error) {
       console.error(error.message);

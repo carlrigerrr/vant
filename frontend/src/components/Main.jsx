@@ -49,7 +49,7 @@ const Main = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/block" element={<UserLayout><AvailabilityPage /></UserLayout>} />
             <Route path="/attendance" element={<UserLayout><CheckInCheckOut /></UserLayout>} />
-            <Route path="/" element={<UserLayout><WeekSchedule /></UserLayout>} />
+            <Route path="/dashboard" element={<UserLayout><WeekSchedule /></UserLayout>} />
             <Route path="/requests" element={<UserLayout><MyRequests /></UserLayout>} />
             <Route path="/messages" element={<UserLayout><MessagesPage /></UserLayout>} />
             <Route path="/announcements" element={<UserLayout><AnnouncementsViewPage /></UserLayout>} />
@@ -77,7 +77,7 @@ const Main = () => {
             <Route path="/client/login" element={<ClientLogin />} />
             <Route path="/client/dashboard" element={<ClientDashboard />} />
             <Route path="/client/onboarding" element={<ClientOnboardingForm />} />
-            <Route path="/landing" element={<LandingPage />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="*" element={<Login />} />
           </Routes>
         </BrowserRouter>

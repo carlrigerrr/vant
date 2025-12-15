@@ -18,7 +18,7 @@ import axios from 'axios';
 import Button from '../common/Button';
 
 const navigation = [
-    { name: 'Work Schedule', href: '/', icon: CalendarIcon, color: 'text-blue-600', bg: 'bg-blue-50' },
+    { name: 'Work Schedule', href: '/dashboard', icon: CalendarIcon, color: 'text-blue-600', bg: 'bg-blue-50' },
     { name: 'Availability', href: '/block', icon: ClockIcon, color: 'text-purple-600', bg: 'bg-purple-50' },
     { name: 'My Requests', href: '/requests', icon: InboxInIcon, color: 'text-pink-600', bg: 'bg-pink-50' },
     { name: 'Messages', href: '/messages', icon: ChatAlt2Icon, color: 'text-green-600', bg: 'bg-green-50' },
