@@ -500,11 +500,11 @@ const AttendancePage = () => {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex gap-2">
                                             {record.checkIn?.beforePhoto && (
-                                                <a href={`http://localhost:4080${record.checkIn.beforePhoto}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">Before</a>
+                                                <a href={record.checkIn.beforePhoto} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">Before</a>
                                             )}
                                             {record.checkIn?.beforePhoto && record.checkOut?.completionPhoto && <span>|</span>}
                                             {record.checkOut?.completionPhoto && (
-                                                <a href={`http://localhost:4080${record.checkOut.completionPhoto}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">After</a>
+                                                <a href={record.checkOut.completionPhoto} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">After</a>
                                             )}
                                             {!record.checkIn?.beforePhoto && !record.checkOut?.completionPhoto && '-'}
                                         </td>
@@ -533,13 +533,13 @@ const AttendancePage = () => {
                             {photoGallery.photos.map((photo, i) => (
                                 <a
                                     key={i}
-                                    href={`http://localhost:4080${photo}`}
+                                    href={photo}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="block aspect-square"
                                 >
                                     <img
-                                        src={`http://localhost:4080${photo}`}
+                                        src={photo}
                                         alt={`Photo ${i + 1}`}
                                         className="w-full h-full object-cover rounded-lg hover:opacity-90 transition-opacity"
                                     />

@@ -99,7 +99,7 @@ export const SocketProvider = ({ children, user, client }) => {
         // Only connect if we have a user or client
         if (!user && !client) return;
 
-        const socketUrl = process.env.REACT_APP_SOCKET_URL || 'http://localhost:4080';
+        const socketUrl = process.env.REACT_APP_SOCKET_URL || (window.location.hostname === 'localhost' ? 'http://localhost:4080' : window.location.origin);
 
         const newSocket = io(socketUrl, {
             withCredentials: true,
