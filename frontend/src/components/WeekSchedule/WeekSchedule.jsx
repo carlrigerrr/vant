@@ -23,20 +23,32 @@ const WeekSchedule = () => {
         // Use the saved startDate if available
         if (res.data[0].startDate) {
           const start = new Date(res.data[0].startDate);
-          const end = addDays(start, 5);
-          setDatesArr(eachDayOfInterval({ start, end }));
-        } else {
-          // Legacy fallback: use the date field or current week
+          if (!isNaN(start.getTime())) {
+            const end = addDays(start, 5);
+            setDatesArr(eachDayOfInterval({ start, end }));
+          }
+        } else if (res.data[0].date) {
+          // Legacy fallback: use the date field
           const scheduleDate = parseISO(res.data[0].date);
-          const start = scheduleDate;
-          const end = addDays(start, 5);
-          setDatesArr(eachDayOfInterval({ start, end }));
+          if (!isNaN(scheduleDate.getTime())) {
+            const start = scheduleDate;
+            const end = addDays(start, 5);
+            setDatesArr(eachDayOfInterval({ start, end }));
+          }
         }
 
-        const scheduleWeekNumber = getISOWeek(parseISO(res.data[0].date));
-        const currentWeekNumber = getISOWeek(new Date());
-        if (scheduleWeekNumber !== currentWeekNumber) setShowSchedule(false);
+        // Only check week number if date is valid
+        if (res.data[0].date) {
+          const parsedDate = parseISO(res.data[0].date);
+          if (!isNaN(parsedDate.getTime())) {
+            const scheduleWeekNumber = getISOWeek(parsedDate);
+            const currentWeekNumber = getISOWeek(new Date());
+            if (scheduleWeekNumber !== currentWeekNumber) setShowSchedule(false);
+          }
+        }
       }
+    }).catch((err) => {
+      console.error('Error fetching schedule:', err);
     });
   };
 
