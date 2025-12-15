@@ -1,9 +1,14 @@
 import { useState } from 'react';
-import { parse } from 'date-fns';
+import { parse, startOfDay, isAfter, isSameDay } from 'date-fns';
 
 const RequestListTableRow = ({ name, comment, date, status, onClick }) => {
-  const requestDate = parse(date, 'dd-MM-yyyy', new Date());
-  const currentDate = new Date();
+  // Try parsing with different formats
+  let requestDate = parse(date, 'EEEE, dd MMMM yyyy', new Date());
+  if (isNaN(requestDate.getTime())) {
+    requestDate = parse(date, 'dd-MM-yyyy', new Date());
+  }
+  const currentDate = startOfDay(new Date());
+  const isPastDate = !isNaN(requestDate.getTime()) && !isAfter(requestDate, currentDate) && !isSameDay(requestDate, currentDate);
 
   return (
     <>
@@ -18,7 +23,7 @@ const RequestListTableRow = ({ name, comment, date, status, onClick }) => {
                 )}
                 {!comment && (
                   <p className="italic font-medium text-gray-800 whitespace-normal">
-                    לא הוזנה הערה
+                    No comment entered
                   </p>
                 )}
                 <p className="mt-0 mb-2 text-gray-600">{date}</p>
@@ -33,23 +38,23 @@ const RequestListTableRow = ({ name, comment, date, status, onClick }) => {
                 onClick={onClick}
                 className="flex items-center justify-center px-2 py-3 mt-2 bg-green-200 rounded-full hover:cursor-pointer"
               >
-                <p className="text-base leading-3 text-green-700">מאושר</p>
+                <p className="text-base leading-3 text-green-700">Approved</p>
               </div>
             )}
-            {currentDate > requestDate && !status && (
+            {isPastDate && !status && (
               <div
                 onClick={onClick}
                 className="flex items-center justify-center px-2 py-3 mt-2 bg-red-200 rounded-full"
               >
-                <p className="text-base leading-3 text-red-700">לא אושר</p>
+                <p className="text-base leading-3 text-red-700">Not Approved</p>
               </div>
             )}
-            {currentDate <= requestDate && !status && (
+            {!isPastDate && !status && (
               <div
                 onClick={onClick}
                 className="flex items-center justify-center px-2 py-3 mt-2 bg-yellow-200 rounded-full hover:cursor-pointer"
               >
-                <p className="text-base leading-3 text-yellow-700">בהמתנה</p>
+                <p className="text-base leading-3 text-yellow-700">Pending</p>
               </div>
             )}
           </div>

@@ -1,4 +1,3 @@
-import Navbar from '../Navbar';
 import { useNavigate } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
 import Schedule from './Schedule';
@@ -12,12 +11,10 @@ const SchedulePage = () => {
   switch (true) {
     case !user:
       return (
-        <>
-          <div className="w-screen h-screen grid place-items-center">
-            <HashLoader className="content-center" size={100} />
-            <h3>Loading, please wait...</h3>
-          </div>
-        </>
+        <div className="w-screen h-screen grid place-items-center">
+          <HashLoader className="content-center" size={100} />
+          <h3>Loading, please wait...</h3>
+        </div>
       );
     case user && user.admin === false && user.isAuthenticated === true:
       navigate('/');
@@ -30,12 +27,9 @@ const SchedulePage = () => {
   }
 
   return (
-    <>
-      <Navbar />
-      <UsersContextProvider>
-        <Schedule />
-      </UsersContextProvider>
-    </>
+    <UsersContextProvider>
+      <Schedule />
+    </UsersContextProvider>
   );
 };
 

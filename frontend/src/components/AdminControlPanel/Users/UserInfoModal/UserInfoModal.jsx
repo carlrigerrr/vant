@@ -26,33 +26,33 @@ export default function UserInfoModal({
 
     if (response.data === 'Success') {
       setReqStatus({
-        bold: 'אוקיי!',
-        msg: `הפרטים עודכנו בהצלחה`,
+        bold: 'OK!',
+        msg: `Details updated successfully`,
         OK: true,
       });
       await refreshAllUsers();
     } else if (response.data === 'NoChangesMade') {
       setReqStatus({
-        bold: 'אוקיי!',
-        msg: `הפרטים עודכנו בהצלחה`,
+        bold: 'OK!',
+        msg: `Details updated successfully`,
         OK: true,
       });
     } else if (response.data === 'UsernameTaken') {
       setReqStatus({
-        bold: 'שגיאה',
-        msg: 'שם המשתמש כבר קיים במערכת',
+        bold: 'Error',
+        msg: 'Username already exists',
         OK: false,
       });
     } else if (response.data === 'UsernameIsEmpty') {
       setReqStatus({
-        bold: 'שגיאה',
-        msg: 'שם המשתמש לא יכול להיות ריק',
+        bold: 'Error',
+        msg: 'Username cannot be empty',
         OK: false,
       });
     } else {
       setReqStatus({
-        bold: 'שגיאה',
-        msg: 'נסה שוב מאוחר יותר',
+        bold: 'Error',
+        msg: 'Try again later',
         OK: false,
       });
     }
@@ -65,14 +65,14 @@ export default function UserInfoModal({
     const response = await axios.post('/delete-user', { _id });
     if (response.data === 'RequestDeletionSuccess') {
       setReqStatus({
-        bold: 'אוקיי!',
-        msg: `המשתמש נמחק בהצלחה`,
+        bold: 'OK!',
+        msg: `User deleted successfully`,
         OK: true,
       });
     } else {
       setReqStatus({
-        bold: 'שגיאה',
-        msg: 'נסה שוב מאוחר יותר',
+        bold: 'Error',
+        msg: 'Try again later',
         OK: false,
       });
     }
@@ -92,7 +92,7 @@ export default function UserInfoModal({
     <>
       {/* <div onClick={openModal} className="flex p-0.5 mt-2 select-none cursor-pointer">
         <PencilAltIcon className="w-[1.45rem] m-0.5" />
-        <p className="font-medium underline">ערוך</p>
+        <p className="font-medium underline">Edit</p>
       </div> */}
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -128,17 +128,16 @@ export default function UserInfoModal({
               leaveTo="opacity-0 scale-95"
             >
               <div
-                dir="rtl"
-                className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-right align-middle transition-all transform bg-white rounded-lg shadow-xl"
+                className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl"
               >
                 <Dialog.Title as="h3" className="text-lg font-bold leading-6 text-gray-900">
-                  ערוך משתמש
+                  Edit User
                 </Dialog.Title>
-                <div dir="rtl" className="mt-2">
+                <div className="mt-2">
                   {modalData && (
                     <>
                       <div className="my-5 modal__section">
-                        <p className="font-medium">שם משתמש</p>
+                        <p className="font-medium">Username</p>
                         <div>
                           <input
                             className="border-2"
@@ -154,11 +153,39 @@ export default function UserInfoModal({
                         </div>
                       </div>
                       <div className="my-5 modal__section">
-                        <p className="font-medium">סיסמא</p>
+                        <p className="font-medium">Email <span className="text-xs text-gray-500">(for schedule notifications)</span></p>
+                        <div>
+                          <input
+                            className="border-2 w-full"
+                            type="email"
+                            placeholder="employee@example.com"
+                            value={modalData.email || ''}
+                            onChange={(e) => {
+                              setModalData({ ...modalData, email: e.target.value });
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className="my-5 modal__section">
+                        <p className="font-medium">Phone <span className="text-xs text-gray-500">(optional)</span></p>
+                        <div>
+                          <input
+                            className="border-2 w-full"
+                            type="tel"
+                            placeholder="+1 555-123-4567"
+                            value={modalData.phone || ''}
+                            onChange={(e) => {
+                              setModalData({ ...modalData, phone: e.target.value });
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className="my-5 modal__section">
+                        <p className="font-medium">Password</p>
                         <div>
                           <input
                             type="text"
-                            placeholder="(אופציונאלי) סיסמא חדשה"
+                            placeholder="(Optional) New Password"
                             className="border-2"
                             value={modalData.password ? modalData.password : ''}
                             onChange={(e) => {
@@ -171,12 +198,12 @@ export default function UserInfoModal({
                               genPassword(e);
                             }}
                           >
-                            סיסמא אקראית
+                            Random Password
                           </button>
                         </div>
                         <div className="mt-5">
                           <p className="text-sm text-gray-500">
-                            * לעדכון סוג משתמש (מנהל או משתמש רגיל), יש לבקש באופן פרטני.
+                            * To update user type (admin or regular user), please request individually.
                           </p>
                         </div>
                       </div>
@@ -192,9 +219,9 @@ export default function UserInfoModal({
                 </div>
 
                 <div className="mt-4">
-                  <Button name="סגור" color="blue" onClick={closeModal} />
-                  <Button name="הסר" color="red" onClick={deleteUser} />
-                  <Button name="שמור" color="green" onClick={saveUser} />
+                  <Button name="Close" color="blue" onClick={closeModal} />
+                  <Button name="Remove" color="red" onClick={deleteUser} />
+                  <Button name="Save" color="green" onClick={saveUser} />
                   {requestStatus && (
                     <Msg
                       bolded={requestStatus.bold}

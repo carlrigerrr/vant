@@ -31,15 +31,15 @@ export default function ScheduleHistoryModal({ shift, shiftsAmount, currentIndex
 
     switch (true) {
       case currentWeekNumber < shiftWeekNumber && currentIndex === 0:
-        return <Badge color="grape">יפורסם בקרוב</Badge>;
+        return <Badge color="grape">Published Soon</Badge>;
       case currentWeekNumber === shiftWeekNumber && currentIndex === 0:
-        return <Badge color="green">מפורסם עכשיו</Badge>;
+        return <Badge color="green">Published Now</Badge>;
       case currentWeekNumber === shiftWeekNumber:
-        return <Badge color="orange">שבוע נוכחי</Badge>;
+        return <Badge color="orange">Current Week</Badge>;
       case currentWeekNumber > shiftWeekNumber:
-        return <Badge color="dark">פורסם בעבר</Badge>;
+        return <Badge color="dark">Published Past</Badge>;
       case currentWeekNumber < shiftWeekNumber:
-        return <Badge color="grape">יפורסם בקרוב</Badge>;
+        return <Badge color="grape">Published Soon</Badge>;
       default:
         break;
     }
@@ -84,30 +84,29 @@ export default function ScheduleHistoryModal({ shift, shiftsAmount, currentIndex
               leaveTo="opacity-0 scale-95"
             >
               <div
-                dir="rtl"
-                className="inline-block w-11/12 p-4 m-2 overflow-auto text-right align-middle transition-all transform bg-white rounded-lg shadow-xl md:w-11/12 lg:w-9/12"
+                className="inline-block w-11/12 p-4 m-2 overflow-auto text-left align-middle transition-all transform bg-white rounded-lg shadow-xl md:w-11/12 lg:w-9/12"
               >
                 <Dialog.Title as="h1" className="text-2xl font-bold leading-6 text-gray-900">
-                  סידור עבודה
+                  Work Schedule
                 </Dialog.Title>
-                <div dir="rtl" className="mt-2">
+                <div className="mt-2">
                   <div className="my-5 modal__section">
                     <p className="text-xl font-medium">{shift.name}</p>
                     <Paper className="w-4/6 m-5" shadow="sm" p="sm" withBorder>
                       <div className="flex">
-                        <p className="ml-2 font-medium">פורסם ע"י:</p>
+                        <p className="ml-2 font-medium">Published by:</p>
                         <p>{shift.savedBy}</p>
                       </div>
                       <div className="flex">
-                        <p className="ml-2 font-medium">תאריך פרסום:</p>
+                        <p className="ml-2 font-medium">Publish Date:</p>
                         <p>{format(parseISO(shift.date), 'dd-MM-yyyy')}</p>
                       </div>
                       <div className="flex">
-                        <p className="ml-2 font-medium">שעת פרסום:</p>
+                        <p className="ml-2 font-medium">Publish Time:</p>
                         <p>{format(parseISO(shift.date), 'HH:mm')}</p>
                       </div>
                       <div className="flex">
-                        <p className="ml-2 font-medium">סטטוס:</p>
+                        <p className="ml-2 font-medium">Status:</p>
                         <div>{shift && handleStatusText()}</div>
                       </div>
                     </Paper>
@@ -122,7 +121,7 @@ export default function ScheduleHistoryModal({ shift, shiftsAmount, currentIndex
                 </div>
 
                 <div className="mt-4">
-                  <Btn name="סגור" color="blue" onClick={closeScheduleHistoryModal} />
+                  <Btn name="Close" color="blue" onClick={closeScheduleHistoryModal} />
                 </div>
               </div>
             </Transition.Child>

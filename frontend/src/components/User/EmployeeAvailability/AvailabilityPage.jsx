@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../../Navbar';
 import axios from 'axios';
 import { format } from 'date-fns';
-import he from 'date-fns/locale/he';
+import enUS from 'date-fns/locale/en-US';
 // import 'react-day-picker/style.css';
 import DateInput from './DateInput.tsx';
 // import Table from './Table';
@@ -22,9 +21,9 @@ const AvailabilityPage = () => {
   const [selected, setSelected] = useState(null);
   const today = new Date();
 
-  let footer = 'יש לבחור תאריך';
+  let footer = 'Select a date';
   if (selected) {
-    footer = `${format(selected, 'EEEE, d LLLL yyyy', { locale: he })}.`;
+    footer = `${format(selected, 'EEEE, d LLLL yyyy', { locale: enUS })}.`;
   }
 
   let props = {
@@ -44,22 +43,22 @@ const AvailabilityPage = () => {
 
       if (response.data.msg === 'BlockAlreadyRequested') {
         setReqStatus({
-          bold: 'שגיאה',
-          msg: `כבר נשלחה בקשה לחסימת התאריך הזה`,
+          bold: 'Error',
+          msg: `Request already sent for this date`,
           OK: false,
         });
       } else if (response.data.msg === 'BlockRequestSuccess') {
         setReqStatus({
-          bold: 'אוקיי!',
-          msg: `הבקשה נשלחה בהצלחה`,
+          bold: 'OK!',
+          msg: `Request sent successfully`,
           OK: true,
         });
         refresh();
       }
     } else {
       setReqStatus({
-        bold: 'שגיאה',
-        msg: 'תאריך לא נבחר',
+        bold: 'Error',
+        msg: 'Date not selected',
         OK: false,
       });
     }
@@ -81,8 +80,7 @@ const AvailabilityPage = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="flex justify-center" dir="rtl">
+      <div className="flex justify-center">
         <form onSubmit={handleSubmit}>
           <DateInput {...props} />
           <CommentTextArea />

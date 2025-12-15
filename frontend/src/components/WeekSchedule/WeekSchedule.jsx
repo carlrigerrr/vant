@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from './../Navbar';
 import HashLoader from 'react-spinners/HashLoader';
 import { useUserContext } from './../useUserContext';
-import { format, addDays, eachDayOfInterval, nextSunday, getISOWeek, parseISO } from 'date-fns';
-import he from 'date-fns/locale/he';
-import DesktopView from './DesktopView';
-import MobileView from './MobileView';
+import { addDays, eachDayOfInterval, nextSunday, getISOWeek, parseISO, format } from 'date-fns';
+import enUS from 'date-fns/locale/en-US';
+import MyScheduleView from './MyScheduleView';
 import axios from 'axios';
 
 const WeekSchedule = () => {
@@ -15,155 +13,106 @@ const WeekSchedule = () => {
   const [table, setTable] = useState(null);
   const [showSchedule, setShowSchedule] = useState(true);
 
-  useEffect(() => {
+  const fetchSchedule = () => {
     const response = axios.get('/getSchedule');
     response.then((res) => {
-      setTable(res.data[0].data);
-      const scheduleWeekNumber = getISOWeek(parseISO(res.data[0].date));
-      const currentWeekNumber = getISOWeek(new Date());
-      if (scheduleWeekNumber !== currentWeekNumber) setShowSchedule(false);
-    });
+      if (res.data && res.data.length > 0) {
+        // Use shifts[] format instead of data[] to get full shift details including client info, times, etc.
+        setTable(res.data[0].shifts || res.data[0].data);
 
-    const currentDate = new Date();
-    const start = nextSunday(currentDate);
-    const end = addDays(start, 5);
-    setDatesArr(eachDayOfInterval({ start, end }));
+        // Use the saved startDate if available
+        if (res.data[0].startDate) {
+          const start = new Date(res.data[0].startDate);
+          const end = addDays(start, 5);
+          setDatesArr(eachDayOfInterval({ start, end }));
+        } else {
+          // Legacy fallback: use the date field or current week
+          const scheduleDate = parseISO(res.data[0].date);
+          const start = scheduleDate;
+          const end = addDays(start, 5);
+          setDatesArr(eachDayOfInterval({ start, end }));
+        }
+
+        const scheduleWeekNumber = getISOWeek(parseISO(res.data[0].date));
+        const currentWeekNumber = getISOWeek(new Date());
+        if (scheduleWeekNumber !== currentWeekNumber) setShowSchedule(false);
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchSchedule();
   }, []);
+
+  // Poll for schedule updates every 60 seconds
+  useEffect(() => {
+    if (!user) return;
+
+    const pollInterval = setInterval(() => {
+      fetchSchedule();
+    }, 60000); // Poll every 60 seconds
+
+    return () => clearInterval(pollInterval);
+  }, [user]);
 
   let navigate = useNavigate();
 
-  switch (true) {
-    case !user:
-      return (
-        <>
-          <div className="grid w-screen h-screen place-items-center">
-            <HashLoader className="content-center" size={100} />
-            <h3>Loading, please wait...</h3>
-          </div>
-        </>
-      );
-    case user && user.isAuthenticated === true:
-      break;
-    case user && user.isAuthenticated === false:
-      navigate('/login');
-      break;
-    default:
-      break;
+  if (!user) {
+    return (
+      <div className="grid w-screen h-screen place-items-center">
+        <HashLoader className="content-center" size={100} />
+        <h3>Loading, please wait...</h3>
+      </div>
+    );
+  }
+
+  if (user && user.isAuthenticated === false) {
+    navigate('/login');
+    return null;
   }
 
   const formatDay = (date) => {
-    return format(date, 'd LLLL', { locale: he });
-  };
-
-  const getDayHebrew = (date) => {
-    return format(date, 'EEEE', { locale: he });
-  };
-
-  const showOnlyMySchedule = (e) => {
-    e.preventDefault();
-
-    const onlyMe = table.map((day) => {
-      return day.filter((employee, index) => {
-        if (employee.username === user.username) {
-          console.log(`${index + 1}/${day.length}`);
-          if (index + 1 === (day.length - 4 || day.length - 2)) {
-            console.log('אמצע');
-          }
-        }
-        return employee.username === user.username;
-      });
-    });
-    console.log(onlyMe);
-    setTable(onlyMe);
+    return format(date, 'd LLLL', { locale: enUS });
   };
 
   return (
-    <>
-      <Navbar />
-      <div>
-        <div className="grid mt-5 place-items-center" dir="rtl">
-          <div className="w-11/12 md:w-5/6 lg:w-5/6">
-            <div className="flex justify-between">
-              <h1 className="text-3xl font-semibold">סידור עבודה נוכחי</h1>
-              {!user.admin && table && (
-                <button
-                  onClick={(e) => showOnlyMySchedule(e)}
-                  className="px-2 py-1 text-base font-semibold text-white bg-gray-600 rounded-full focus:outline-none focus:ring focus:ring-blue-300 hover:bg-sky-700"
-                >
-                  רק אני
-                </button>
-              )}
-            </div>
-            <h3>
-              {datesArr && formatDay(datesArr[0])} - {datesArr && formatDay(datesArr[5])}
-            </h3>
-            <div>
-              {table && table.length > 0 ? (
-                <div className="flex lg:grid lg:place-items-center md:grid md:place-items-center ">
-                  <div className="hidden w-full mt-10 md:table md:w-11/12 lg:w-9/12" dir="rtl">
-                    {table ? (
-                      <div className="table-header-group text-xl">
-                        <div className="table-row font-bold">
-                          <div className="table-cell p-2 border-b wrap">
-                            ראשון
-                            <span className="block text-sm font-normal break-words">
-                              {datesArr && formatDay(datesArr[0])}
-                            </span>
-                          </div>
-                          <div className="table-cell p-2 border-b">
-                            שני{' '}
-                            <span className="block text-sm font-normal">
-                              {datesArr && formatDay(datesArr[1])}
-                            </span>
-                          </div>
-                          <div className="table-cell p-2 border-b">
-                            שלישי
-                            <span className="block text-sm font-normal">
-                              {datesArr && formatDay(datesArr[2])}
-                            </span>
-                          </div>
-                          <div className="table-cell p-2 border-b">
-                            רביעי
-                            <span className="block text-sm font-normal">
-                              {datesArr && formatDay(datesArr[3])}
-                            </span>
-                          </div>
-                          <div className="table-cell p-2 border-b">
-                            חמישי
-                            <span className="block text-sm font-normal">
-                              {datesArr && formatDay(datesArr[4])}
-                            </span>
-                          </div>
-                          <div className="table-cell p-2 border-b">
-                            שישי
-                            <span className="block text-sm font-normal">
-                              {datesArr && formatDay(datesArr[5])}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    ) : null}
-
-                    <DesktopView table={table} datesArr={datesArr} />
-                  </div>
-
-                  <MobileView
-                    table={table}
-                    getDayHebrew={getDayHebrew}
-                    datesArr={datesArr}
-                    formatDay={formatDay}
-                  />
-                </div>
-              ) : (
-                <h1 className="text-3xl font-medium text-center my-28 text-slate-800">
-                  לא פורסם סידור
-                </h1>
-              )}
-            </div>
+    <div className="min-h-screen bg-gray-50/50">
+      {/* Header */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="md:flex md:items-center md:justify-between">
+          <div className="min-w-0 flex-1">
+            <h2 className="text-2xl font-bold leading-7 text-[var(--text-heading)] sm:truncate sm:text-3xl sm:tracking-tight">
+              My Schedule
+            </h2>
+            {datesArr && (
+              <p className="mt-2 text-sm text-gray-500 font-medium">
+                Week to Display: <span className="text-[var(--primary)]">{formatDay(datesArr[0])} - {formatDay(datesArr[5])}</span>
+              </p>
+            )}
           </div>
         </div>
       </div>
-    </>
+
+      {/* Content */}
+      <div className="max-w-4xl mx-auto">
+        {table ? (
+          <MyScheduleView
+            table={table}
+            datesArr={datesArr}
+            user={user}
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+              <h3 className="text-xl font-medium text-gray-900">No Schedule Published</h3>
+              <p className="mt-2 text-gray-500">
+                The schedule for this week hasn't been published yet.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

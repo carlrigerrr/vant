@@ -36,8 +36,8 @@ export default function CreateUserModal() {
     console.log(modalData.username);
     if (modalData.username === '' || modalData.password === '') {
       setReqStatus({
-        bold: 'שגיאה',
-        msg: `שם משתמש או סיסמא ריקים`,
+        bold: 'Error',
+        msg: `Username or password empty`,
         OK: false,
       });
     } else if (modalData.username.length > 0 && modalData.password.length > 0) {
@@ -48,27 +48,27 @@ export default function CreateUserModal() {
 
       if (response.data === 'Registered') {
         setReqStatus({
-          bold: 'אוקיי!',
-          msg: `משתמש נוצר בהצלחה`,
+          bold: 'OK!',
+          msg: `User created successfully`,
           OK: true,
         });
         await refreshAllUsers();
       } else if (response.data === 'UserAlreadyExists') {
         setReqStatus({
-          bold: 'שגיאה',
-          msg: 'שם המשתמש כבר קיים במערכת',
+          bold: 'Error',
+          msg: 'Username already exists',
           OK: false,
         });
       } else if (response.data === 'UsernameIsEmpty') {
         setReqStatus({
-          bold: 'שגיאה',
-          msg: 'שם המשתמש לא יכול להיות ריק',
+          bold: 'Error',
+          msg: 'Username cannot be empty',
           OK: false,
         });
       } else {
         setReqStatus({
-          bold: 'שגיאה',
-          msg: 'נסה שוב מאוחר יותר',
+          bold: 'Error',
+          msg: 'Try again later',
           OK: false,
         });
       }
@@ -95,7 +95,7 @@ export default function CreateUserModal() {
         rightIcon={<FaUserPlus size={14} />}
         onClick={openModal}
       >
-        צור משתמש
+        Create User
       </Button>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -131,21 +131,20 @@ export default function CreateUserModal() {
               leaveTo="opacity-0 scale-95"
             >
               <div
-                dir="rtl"
-                className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-right align-middle transition-all transform bg-white rounded-lg shadow-xl"
+                className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl"
               >
                 <Dialog.Title as="h3" className="text-lg font-bold leading-6 text-gray-900">
-                  יצירת משתמש
+                  Create User
                 </Dialog.Title>
-                <div dir="rtl" className="mt-2">
+                <div className="mt-2">
                   <div className="my-5 modal__section">
-                    <p className="font-medium">שם משתמש</p>
+                    <p className="font-medium">Username</p>
                     <div>
                       <input
                         type="text"
                         required
                         className="border-2"
-                        placeholder="רצוי בעברית"
+                        placeholder="Enter username"
                         value={modalData?.username}
                         onChange={(e) => {
                           const text = e.target.value;
@@ -157,12 +156,12 @@ export default function CreateUserModal() {
                     </div>
                   </div>
                   <div className="my-5 modal__section">
-                    <p className="font-medium">סיסמא</p>
+                    <p className="font-medium">Password</p>
                     <div>
                       <input
                         type="text"
                         required
-                        placeholder="בחר סיסמא"
+                        placeholder="Choose password"
                         className="border-2"
                         value={modalData?.password}
                         onChange={(e) => {
@@ -178,20 +177,20 @@ export default function CreateUserModal() {
                           genPassword(e);
                         }}
                       >
-                        סיסמא אקראית
+                        Random Password
                       </button>
                     </div>
                     <div className="mt-5">
                       <p className="text-sm text-gray-500">
-                        * לעדכון סוג משתמש (מנהל או משתמש רגיל), יש לבקש באופן פרטני.
+                        * To update user type (admin or regular user), please request individually.
                       </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-4">
-                  <Btn name="סגור" color="blue" onClick={closeModal} />
-                  <Btn name="צור משתמש" color="green" onClick={createUser} />
+                  <Btn name="Close" color="blue" onClick={closeModal} />
+                  <Btn name="Create User" color="green" onClick={createUser} />
                   {requestStatus && (
                     <Msg
                       bolded={requestStatus.bold}
