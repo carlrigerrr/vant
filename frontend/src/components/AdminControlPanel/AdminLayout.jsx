@@ -142,6 +142,16 @@ const AdminLayout = ({ children }) => {
                                         })}
                                     </nav>
                                 </div>
+                                <div className="flex-shrink-0 flex border-t border-gray-100 p-4">
+                                    <Link to="/admin/profile" className="flex-shrink-0 w-full group block" onClick={() => setSidebarOpen(false)}>
+                                        <div className="flex items-center">
+                                            <div className="ml-3">
+                                                <p className="text-sm font-medium text-gray-900">{user?.username || 'Admin'}</p>
+                                                <p className="text-xs font-medium text-gray-400 group-hover:text-blue-500 transition-colors cursor-pointer">View Profile</p>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </div>
                             </Dialog.Panel>
                         </Transition.Child>
                         <div className="flex-shrink-0 w-14">{/* Force sidebar to shrink to fit close icon */}</div>

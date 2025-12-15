@@ -160,13 +160,14 @@ const UserLayout = ({ children }) => {
                                     </nav>
                                 </div>
                                 <div className="flex-shrink-0 flex flex-col border-t border-gray-100 p-4">
-                                    <div className="flex-shrink-0 w-full group block">
+                                    <Link to="/profile" className="flex-shrink-0 w-full group block" onClick={() => setSidebarOpen(false)}>
                                         <div className="flex items-center">
                                             <div className="ml-3">
                                                 <p className="text-sm font-medium text-gray-900">{user?.username || 'User'}</p>
+                                                <p className="text-xs font-medium text-gray-400 group-hover:text-blue-500 transition-colors cursor-pointer">View Profile</p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                     <div className="mt-3 pt-3 border-t border-gray-100 space-y-2">
                                         <div className="flex items-center justify-between">
                                             <span className="text-xs text-gray-500">Jobs Completed:</span>
