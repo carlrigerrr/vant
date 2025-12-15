@@ -242,8 +242,8 @@ const LandingPage = () => {
             <section id="solution" className="py-24 bg-[#F2F4FA] relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-4xl font-bold text-[#3d4465] mb-6">
-                            One simple system that <br className="hidden md:block" /> brings everything together
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#3d4465] mb-6">
+                            One simple system that brings everything together
                         </h2>
                         <p className="text-lg text-gray-500">
                             No spreadsheets. No message chaos. Just a single weekly schedule you can trust.
