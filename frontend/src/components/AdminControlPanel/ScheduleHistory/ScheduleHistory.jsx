@@ -18,7 +18,7 @@ const ScheduleHistory = () => {
         setIsLoading(true);
         try {
             const response = await axios.get('/getScheduleHistory');
-            setShifts(response.data);
+            setShifts(Array.isArray(response.data) ? response.data : []);
         } catch (error) {
             console.error("Error fetching history:", error);
         } finally {
@@ -136,8 +136,8 @@ const ScheduleHistory = () => {
                                 const index = shifts.length - i;
 
                                 return (
-                                    <div 
-                                        key={shift._id} 
+                                    <div
+                                        key={shift._id}
                                         className="grid grid-cols-1 md:grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors items-center"
                                     >
                                         {/* Index */}
@@ -211,7 +211,7 @@ const ScheduleHistory = () => {
                         <p className="mt-1 text-gray-500 max-w-sm">
                             You haven't published any work schedules yet. Click below to create your first one.
                         </p>
-                        <button 
+                        <button
                             onClick={() => navigate('/admin/schedule')}
                             className="mt-6 flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
                         >
