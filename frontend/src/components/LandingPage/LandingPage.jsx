@@ -168,10 +168,10 @@ const LandingPage = () => {
                             <div className="inline-block px-3 py-1 bg-red-50 text-red-600 rounded-full text-sm font-semibold mb-6">
                                 The Struggle
                             </div>
-                            <h2 className="text-4xl font-bold text-[#3d4465] mb-6 leading-tight">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#3d4465] mb-6 leading-tight">
                                 The work isn’t the problem — <span className="text-red-500">the admin is.</span>
                             </h2>
-                            <p className="text-lg text-gray-500 mb-8">
+                            <p className="text-base sm:text-lg text-gray-500 mb-8">
                                 Running a cleaning business shouldn't mean:
                             </p>
 
@@ -245,7 +245,7 @@ const LandingPage = () => {
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#3d4465] mb-6">
                             One simple system that brings everything together
                         </h2>
-                        <p className="text-lg text-gray-500">
+                        <p className="text-base sm:text-lg text-gray-500">
                             No spreadsheets. No message chaos. Just a single weekly schedule you can trust.
                         </p>
                     </div>
@@ -277,7 +277,7 @@ const LandingPage = () => {
                                 <div className="p-3 bg-gray-50 rounded-xl w-fit mb-4">
                                     {feature.icon}
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
+                                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
                                 <p className="text-gray-500">{feature.desc}</p>
                             </div>
                         ))}
@@ -309,7 +309,7 @@ const LandingPage = () => {
                                 <h2 className="text-3xl md:text-5xl font-bold mb-6 !text-white">
                                     Proof of work — <br />without chasing photos
                                 </h2>
-                                <p className="text-lg text-blue-100 mb-8 leading-relaxed">
+                                <p className="text-base sm:text-lg text-blue-100 mb-8 leading-relaxed">
                                     Before starting a job, cleaners take a quick photo. After finishing, they take another.
                                     <br /><br />
                                     <strong>Vant automatically sends these to:</strong>
@@ -358,16 +358,16 @@ const LandingPage = () => {
             {/* POSITIONING / WHY VANT */}
             <section className="py-24 bg-[#F2F4FA]">
                 <div className="max-w-4xl mx-auto px-4 text-center">
-                    <h2 className="text-3xl font-bold text-[#3d4465] mb-6">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-[#3d4465] mb-6">
                         Built for small cleaning teams — <span className="text-gray-400">not big corporations</span>
                     </h2>
-                    <p className="text-xl text-gray-500 mb-12">
+                    <p className="text-lg sm:text-xl text-gray-500 mb-12">
                         Vant is designed for owner-led cleaning businesses where the owner still does the admin.
                     </p>
 
                     <div className="grid md:grid-cols-2 gap-8 text-left">
                         <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
-                            <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                                 <LightningBoltIcon className="w-5 h-5 text-amber-500" /> Focus on Today
                             </h3>
                             <p className="text-gray-500">
@@ -375,7 +375,7 @@ const LandingPage = () => {
                             </p>
                         </div>
                         <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
-                            <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                                 <TrendingUpIcon className="w-5 h-5 text-green-500" /> Grows With You
                             </h3>
                             <p className="text-gray-500">
@@ -390,7 +390,7 @@ const LandingPage = () => {
             <section className="py-20 bg-white border-y border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 text-center">
                     <div className="mx-auto w-16 h-1 w-16 bg-[#1362FC] rounded-full mb-8"></div>
-                    <h2 className="text-3xl font-bold text-[#3d4465] mb-6">More than software — a long-term system</h2>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-[#3d4465] mb-6">More than software — a long-term system</h2>
                     <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
                         We don’t just give you software and disappear. We help you set it up properly, reduce admin stress, and adapt the system as your business grows.
                         <br /><br />
@@ -407,7 +407,7 @@ const LandingPage = () => {
             {/* FINAL CTA */}
             <section className="py-24 bg-[#1362FC] text-white text-center">
                 <div className="max-w-4xl mx-auto px-4">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-8 !text-white">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 !text-white">
                         Want to see if Vant fits your business?
                     </h2>
                     <button className="bg-white text-[#1362FC] px-10 py-5 rounded-2xl font-bold text-xl shadow-xl hover:bg-gray-50 transform hover:-translate-y-1 transition-all">
